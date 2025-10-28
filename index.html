@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unreal Engine Control</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-image: url('Figure2.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: white;
+      text-align: center;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 30px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 15px 30px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffffcc;
+      color: black;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>Minga</h1>
+
+    <div>
+      <button onclick="sendCommand('Character 1')">Character 1</button>
+      <button onclick="sendCommand('Character 2')">Character 2</button>
+    </div>
+  </div>
+
+  <script>
+    const SERVER_IP = "localhost"; // Change this to your actual PC IP (e.g., "192.168.1.5")
+
+    // Function to send commands to Node.js server
+    function sendCommand(action) {
+      fetch(`http://${SERVER_IP}:3000/send-command`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user: action })
+      })
+      .then(() => console.log("Command sent:", action))
+      .catch(err => console.error("Error sending command:", err));
+    }
+  </script>
+</body>
+</html>
